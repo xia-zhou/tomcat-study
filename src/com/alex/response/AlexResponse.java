@@ -3,19 +3,20 @@ package com.alex.response;
 import com.alex.request.AlexRequest;
 import com.alex.server.AlexServer;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.ServletResponse;
+import java.io.*;
+import java.util.Locale;
 
 /**
  * Created by zhangsong on 15/8/14.
  */
-public class AlexResponse {
+public class AlexResponse implements ServletResponse{
     private OutputStream outputStream;
 
     private AlexRequest alexRequest;
 
+    private PrintWriter printWriter;
     public AlexResponse(OutputStream outputStream){
         this.outputStream = outputStream;
     }
@@ -26,6 +27,7 @@ public class AlexResponse {
 
     public void sendStaticResource(){
         byte[] buffer = new byte[1024];
+
         FileInputStream fileInputStream = null;
         try {
             File file = new File(AlexServer.ROOT+alexRequest.getUri());
@@ -53,5 +55,71 @@ public class AlexResponse {
                 }
             }
         }
+    }
+
+    @Override
+    public String getCharacterEncoding() {
+        return null;
+    }
+
+    @Override
+    public ServletOutputStream getOutputStream() throws IOException {
+        return null;
+    }
+
+    @Override
+    public PrintWriter getWriter() throws IOException {
+        printWriter = new PrintWriter(outputStream,true);
+        return printWriter;
+    }
+
+    @Override
+    public void setContentLength(int i) {
+
+    }
+
+    @Override
+    public void setContentType(String s) {
+
+    }
+
+    @Override
+    public void setBufferSize(int i) {
+
+    }
+
+    @Override
+    public int getBufferSize() {
+        return 0;
+    }
+
+    @Override
+    public void flushBuffer() throws IOException {
+
+    }
+
+    @Override
+    public void resetBuffer() {
+
+    }
+
+    @Override
+    public boolean isCommitted() {
+        return false;
+    }
+
+    @Override
+    public void reset() {
+
+    }
+
+    @Override
+    public void setLocale(Locale locale) {
+
+    }
+
+    @Override
+    public Locale getLocale() {
+        return null;
     }
 }

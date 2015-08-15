@@ -1,8 +1,11 @@
 package com.alex.server;
 
+import com.alex.process.ServletProcess;
+import com.alex.process.StaticResourceProcess;
 import com.alex.request.AlexRequest;
 import com.alex.response.AlexResponse;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,7 +17,7 @@ import java.net.Socket;
  * Created by zhangsong on 15/8/14.
  */
 public class AlexServer {
-    public static final String ROOT = "/Users/zhangsong/work/document/platform-doc";
+    public static final String ROOT = System.getProperty("user.dir") + File.separator + "webroot";
     private String SHUTDOWN = "/shutdown";
     private boolean shutdown = false;
 
@@ -44,7 +47,14 @@ public class AlexServer {
                     alexRequest.parse();
                     AlexResponse alexResponse = new AlexResponse(outputStream);
                     alexResponse.setAlexRequest(alexRequest);
-                    alexResponse.sendStaticResource();
+                    if(alexRequest.getUri().startsWith("/servlet/")){
+                        ServletProcess servletProcess = new ServletProcess();
+                        servletProcess.process(alexRequest,alexResponse);
+                    }else{
+                        StaticResourceProcess staticResourceProcess = new StaticResourceProcess();
+                        staticResourceProcess.process(alexRequest,alexResponse);
+                    }
+                    //alexResponse.sendStaticResource();
                     socket.close();
                     shutdown = alexRequest.getUri().equals(SHUTDOWN);
                 } catch (IOException e) {
