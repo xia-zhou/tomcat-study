@@ -25,22 +25,22 @@ public class HttpRequestFacade implements HttpServletRequest {
 
     @Override
     public String getAuthType() {
-        return null;
+        return request.getAuthType();
     }
 
     @Override
     public Cookie[] getCookies() {
-        return new Cookie[0];
+        return request.getCookies();
     }
 
     @Override
     public long getDateHeader(String s) {
-        return 0;
+        return request.getDateHeader(s);
     }
 
     @Override
     public String getHeader(String s) {
-        return null;
+        return request.getHeader(s);
     }
 
     @Override

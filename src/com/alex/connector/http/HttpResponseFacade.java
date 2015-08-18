@@ -114,7 +114,7 @@ public class HttpResponseFacade implements HttpServletResponse {
 
     @Override
     public PrintWriter getWriter() throws IOException {
-        return null;
+        return response.getWriter();
     }
 
     @Override

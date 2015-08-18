@@ -22,6 +22,30 @@ public class HttpRequestLine {
     private char[] protocol;
     private int protocolEnd;
 
+    public void setMethod(char[] method) {
+        this.method = method;
+    }
+
+    public void setMethodEnd(int methodEnd) {
+        this.methodEnd = methodEnd;
+    }
+
+    public void setUri(char[] uri) {
+        this.uri = uri;
+    }
+
+    public void setUriEnd(int uriEnd) {
+        this.uriEnd = uriEnd;
+    }
+
+    public void setProtocol(char[] protocol) {
+        this.protocol = protocol;
+    }
+
+    public void setProtocolEnd(int protocolEnd) {
+        this.protocolEnd = protocolEnd;
+    }
+
     public char[] getMethod() {
         return method;
     }

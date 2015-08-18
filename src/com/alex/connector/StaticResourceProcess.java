@@ -8,6 +8,6 @@ import com.alex.connector.http.HttpResponse;
  */
 public class StaticResourceProcess {
     public void process(HttpRequest request, HttpResponse response) {
-
+        response.sendStaticResource();
     }
 }
