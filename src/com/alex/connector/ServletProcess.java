@@ -40,7 +40,8 @@ public class ServletProcess {
         }
         Servlet servlet = null;
         try {
-            servlet = (Servlet) myClass.newInstance();
+            Object o = myClass.newInstance();
+            servlet = (Servlet)o;
             servlet.service(new HttpRequestFacade(request),new HttpResponseFacade(response));
         } catch (InstantiationException e) {
             e.printStackTrace();

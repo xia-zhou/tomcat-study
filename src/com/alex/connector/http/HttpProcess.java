@@ -2,7 +2,6 @@ package com.alex.connector.http;
 
 import com.alex.connector.ServletProcess;
 import com.alex.connector.StaticResourceProcess;
-import com.sun.tools.internal.ws.processor.modeler.annotation.AnnotationProcessorContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -17,27 +16,35 @@ import java.util.ArrayList;
 public class HttpProcess {
     private HttpRequest request;
     private HttpResponse response;
-    private HttpRequestLine requestLine = new HttpRequestLine();
-    public HttpProcess(HttpConnector httpConnector){
-    }
+
 
     public void process(Socket socket) {
         SocketInputStream socketInputStream = null;
         OutputStream outputStream = null;
         try {
+            // 获取socket的输入
             socketInputStream = new SocketInputStream(socket.getInputStream(),2048);
+            // 获取socket 对应的输出，
             outputStream = socket.getOutputStream();
+            // 构建请求类
             request  = new HttpRequest(socketInputStream);
+            // 构建输出类
             response = new HttpResponse(outputStream);
+            // 为输出填写请求
             response.setRequest(request);
+            // 设置返回的头部
             response.setHeader("Service", "Original Vampires");
+            // 截取请求头信息，请求方法，请求uri，http版本
             parseRequest(socketInputStream, outputStream);
+            // 截取请求的header信息
             parseHeadder(socketInputStream);
-            request.getParameterMap();
+            // 判断u∫ri 格式，如果是servlet开头的就认为是servlet请求。
             if(request.getRequestURI().startsWith("/servlet/")){
+                // servlet 请求处理器
                 ServletProcess servletProcess = new ServletProcess();
                 servletProcess.process(request,response);
             }else{
+                // 静态资源处理器
                 StaticResourceProcess staticResourceProcess = new StaticResourceProcess();
                 staticResourceProcess.process(request,response);
             }
@@ -49,6 +56,12 @@ public class HttpProcess {
         }
     }
 
+    /**
+     *  根据输入流截取header信息
+     * @param socketInputStream
+     * @throws IOException
+     * @throws ServletException
+     */
     private void parseHeadder(SocketInputStream socketInputStream) throws IOException, ServletException {
         while (true) {
             HttpHeader header = new HttpHeader();;
@@ -96,6 +109,12 @@ public class HttpProcess {
             }
         }
     }
+
+    /**
+     * 截取header中的cookie信息
+     * @param header
+     * @return
+     */
     public static Cookie[] parseCookieHeader(String header) {
         if ((header == null) || (header.length() < 1) )
             return (new Cookie[0]);
@@ -126,11 +145,21 @@ public class HttpProcess {
         }
         return ((Cookie[]) cookies.toArray (new Cookie [cookies.size ()]));
     }
+
+    /**
+     * 截取请求头信息
+     * @param socketInputStream
+     * @param outputStream
+     * @throws IOException
+     * @throws ServletException
+     */
     private void parseRequest(SocketInputStream socketInputStream, OutputStream outputStream) throws IOException, ServletException {
+        HttpRequestLine requestLine = new HttpRequestLine();
+        // 解析头部信息 分离 请求方法（method），请求uri（uri），请求http版本。解析完的数据放在requestLine里面。
         socketInputStream.readRequestLine(requestLine);
         String method = new String(requestLine.getMethod(),0,requestLine.getMethodEnd());
         String uri = null;
-        new String(requestLine.getUri(),0,requestLine.getUriEnd());
+       // new String(requestLine.getUri(),0,requestLine.getUriEnd());
         String protocol = new String(requestLine.getProtocol(),0,requestLine.getProtocolEnd());
         if (method.length() < 1) {
             throw new ServletException("Missing HTTP request method"); }
@@ -156,7 +185,6 @@ public class HttpProcess {
                 }
             }
         }
-
         String match = ";jsessionid=";
         int semicolon = uri.indexOf(match);
         if(semicolon>=0){
@@ -186,6 +214,12 @@ public class HttpProcess {
             throw new ServletException("Invalid URI: " + uri + "'");
         }
     }
+
+    /**
+     * 处理url异常信息
+     * @param path
+     * @return
+     */
     protected String normalize(String path) {
         if (path == null)
             return null;

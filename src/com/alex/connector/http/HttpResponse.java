@@ -434,11 +434,12 @@ public class HttpResponse implements HttpServletResponse{
     }
 
     public PrintWriter getWriter() throws IOException {
-        ResponseStream newStream = new ResponseStream(this);
+        /*ResponseStream newStream = new ResponseStream(this);
         newStream.setCommit(false);
         OutputStreamWriter osr =
                 new OutputStreamWriter(newStream, getCharacterEncoding());
-        writer = new ResponseWriter(osr);
+        writer = new ResponseWriter(osr);*/
+        writer = new PrintWriter(output,true);
         return writer;
     }
 

@@ -7,6 +7,7 @@ import com.alex.connector.http.HttpConnector;
  */
 public class BootStrap {
     public static void main(String[] args) {
+        // 全局启动容器
         HttpConnector httpConnector = new HttpConnector();
         httpConnector.start();
     }

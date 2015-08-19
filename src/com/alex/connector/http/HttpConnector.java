@@ -20,6 +20,7 @@ public class HttpConnector implements Runnable{
     public void run() {
         ServerSocket serverSocket = null;
         try {
+            //  监听本地 8080 端口
             serverSocket = new ServerSocket(8080,1, InetAddress.getByName("127.0.0.1"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -28,11 +29,14 @@ public class HttpConnector implements Runnable{
         while (!stopped){
             Socket socket = null;
             try {
-               socket = serverSocket.accept();
+                // 接收到请求的 socket
+                socket = serverSocket.accept();
             } catch (IOException e) {
                 continue;
             }
-            HttpProcess httpProcess = new HttpProcess(this);
+            // 创建处理类
+            HttpProcess httpProcess = new HttpProcess();
+            // 处理类，根据socket 处理请求
             httpProcess.process(socket);
         }
     }

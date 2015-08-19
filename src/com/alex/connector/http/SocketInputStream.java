@@ -89,7 +89,6 @@ public class SocketInputStream extends InputStream {
             count = nRead;
         }
     }
-
     public void readRequestLine(HttpRequestLine requestLine) throws IOException {
         if (requestLine.getMethodEnd() != 0) {
             requestLine.recycle();
