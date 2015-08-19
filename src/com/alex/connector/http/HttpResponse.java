@@ -375,8 +375,6 @@ public class HttpResponse implements HttpServletResponse{
     public void addIntHeader(String name, int value) {
         if (isCommitted())
             return;
-//    if (included)
-        //    return;     // Ignore any call from an included servlet
         addHeader(name, "" + value);
     }
 
@@ -434,12 +432,11 @@ public class HttpResponse implements HttpServletResponse{
     }
 
     public PrintWriter getWriter() throws IOException {
-        /*ResponseStream newStream = new ResponseStream(this);
-        newStream.setCommit(false);
+        ResponseStream newStream = new ResponseStream(this);
+        newStream.setCommit(true);
         OutputStreamWriter osr =
                 new OutputStreamWriter(newStream, getCharacterEncoding());
-        writer = new ResponseWriter(osr);*/
-        writer = new PrintWriter(output,true);
+        writer = new ResponseWriter(osr);
         return writer;
     }
 

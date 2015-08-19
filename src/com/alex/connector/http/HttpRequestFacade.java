@@ -45,52 +45,52 @@ public class HttpRequestFacade implements HttpServletRequest {
 
     @Override
     public Enumeration getHeaders(String s) {
-        return null;
+        return request.getHeaders(s);
     }
 
     @Override
     public Enumeration getHeaderNames() {
-        return null;
+        return request.getHeaderNames();
     }
 
     @Override
     public int getIntHeader(String s) {
-        return 0;
+        return request.getIntHeader(s);
     }
 
     @Override
     public String getMethod() {
-        return null;
+        return request.getMethod();
     }
 
     @Override
     public String getPathInfo() {
-        return null;
+        return request.getPathInfo();
     }
 
     @Override
     public String getPathTranslated() {
-        return null;
+        return request.getPathTranslated();
     }
 
     @Override
     public String getContextPath() {
-        return null;
+        return request.getContextPath();
     }
 
     @Override
     public String getQueryString() {
-        return null;
+        return request.getQueryString();
     }
 
     @Override
     public String getRemoteUser() {
-        return null;
+        return request.getRemoteUser();
     }
 
     @Override
     public boolean isUserInRole(String s) {
-        return false;
+        return request.isUserInRole(s);
     }
 
     @Override
@@ -105,17 +105,17 @@ public class HttpRequestFacade implements HttpServletRequest {
 
     @Override
     public String getRequestURI() {
-        return null;
+        return request.getRequestURI();
     }
 
     @Override
     public StringBuffer getRequestURL() {
-        return null;
+        return request.getRequestURL();
     }
 
     @Override
     public String getServletPath() {
-        return null;
+        return request.getServletPath();
     }
 
     @Override
@@ -170,12 +170,12 @@ public class HttpRequestFacade implements HttpServletRequest {
 
     @Override
     public int getContentLength() {
-        return 0;
+        return request.getContentLength();
     }
 
     @Override
     public String getContentType() {
-        return null;
+        return request.getContentType();
     }
 
     @Override
@@ -185,42 +185,42 @@ public class HttpRequestFacade implements HttpServletRequest {
 
     @Override
     public String getParameter(String s) {
-        return null;
+        return request.getParameter(s);
     }
 
     @Override
     public Enumeration getParameterNames() {
-        return null;
+        return request.getParameterNames();
     }
 
     @Override
     public String[] getParameterValues(String s) {
-        return new String[0];
+        return request.getParameterValues(s);
     }
 
     @Override
     public Map getParameterMap() {
-        return null;
+        return request.getParameterMap();
     }
 
     @Override
     public String getProtocol() {
-        return null;
+        return request.getProtocol();
     }
 
     @Override
     public String getScheme() {
-        return null;
+        return request.getScheme();
     }
 
     @Override
     public String getServerName() {
-        return null;
+        return request.getServerName();
     }
 
     @Override
     public int getServerPort() {
-        return 0;
+        return request.getServerPort();
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.alex.connector.http;
 
 import com.alex.connector.RequestStream;
+import com.alex.utils.Enumrator;
+import org.apache.tomcat.util.collections.EmptyEnumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletInputStream;
@@ -258,22 +260,20 @@ public class HttpRequest implements HttpServletRequest {
     }
 
     public Enumeration getHeaderNames() {
-        /*synchronized (headers) {
-            return (new Enumerator(headers.keySet()));
-        }*/
-        return null;
+        synchronized (headers) {
+            return (new Enumrator<>(headers.keySet().iterator()));
+        }
     }
 
     public Enumeration getHeaders(String name) {
-        /*name = name.toLowerCase();
+        name = name.toLowerCase();
         synchronized (headers) {
             ArrayList values = (ArrayList) headers.get(name);
             if (values != null)
-                return (new Enumerator(values));
+                return (new Enumrator<>(values.iterator()));
             else
-                return (new Enumerator(empty));
-        }*/
-        return null;
+                return (new Enumrator<>(empty.iterator()));
+        }
     }
 
     public ServletInputStream getInputStream() throws IOException {
@@ -321,7 +321,8 @@ public class HttpRequest implements HttpServletRequest {
 
     public Enumeration getParameterNames() {
         parseParameters();
-        return null;
+
+        return new Enumrator<>(this.parameters.keySet().iterator());
     }
 
     public String[] getParameterValues(String name) {
@@ -388,7 +389,7 @@ public class HttpRequest implements HttpServletRequest {
     }
 
     public String getServerName() {
-        return null;
+        return serverName;
     }
 
     public int getServerPort() {

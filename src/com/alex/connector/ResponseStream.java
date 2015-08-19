@@ -4,7 +4,6 @@ import com.alex.connector.http.HttpResponse;
 
 import javax.servlet.ServletOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * Created by zhangsong on 15/8/18.
@@ -53,15 +52,6 @@ public class ResponseStream extends ServletOutputStream {
      * The Response with which this input stream is associated.
      */
     protected HttpResponse response = null;
-
-
-    /**
-     * The underlying output stream to which we should write data.
-     */
-    protected OutputStream stream = null;
-
-
-    // ------------------------------------------------------------- Properties
 
 
     /**
