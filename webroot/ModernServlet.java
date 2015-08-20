@@ -47,9 +47,9 @@ public class ModernServlet extends HttpServlet {
     out.println("</html>");
 
   }
-  @Override
+  /*@Override
   public void service(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
     //super.service(request,response);
     this.doGet(request,response);
-  }
+  }*/
 }
